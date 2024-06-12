@@ -345,16 +345,47 @@ class Ui_MainWindow(object):
         self.pushButton_2.clicked.connect(self.deleteData)
         self.pushButton_3.clicked.connect(self.updateData)
         self.pushButton_4.clicked.connect(self.resetData)
+
+    def loadTable(self):
+        tableData = dbConnect.loadData()
+        for i in range(len(tableData)):
+            row_position = self.tableWidget.rowCount() 
+            self.tableWidget.insertRow(row_position)#inserting a new row 
+            for j in range(0,len(tableData[0])):
+                print(tableData[i][j])
+                self.tableWidget.setItem(row_position,j, QTableWidgetItem(tableData[i][j]))
+
+
+    #     #Adding data to table
+        # row_position = self.tableWidget.rowCount() 
+        #gettint existing row count so we can add new row at the end of the row
+    #    # print(row_position)
+        # self.tableWidget.insertRow(row_position)#inserting a new row 
+    #     # inserting respective data entered at the form on the new row
+
+        # self.tableWidget.setItem(row_position, 0, QTableWidgetItem(department))
+        # self.tableWidget.setItem(row_position, 1, QTableWidgetItem(designation))
+        # self.tableWidget.setItem(row_position, 2, QTableWidgetItem(address))
+        # self.tableWidget.setItem(row_position, 3, QTableWidgetItem(date_of_birth))
+        # # self.tableWidget.setItem(row_position, 4, QTableWidgetItem(identity))
+        # self.tableWidget.setItem(row_position, 5, QTableWidgetItem(name))
+        # self.tableWidget.setItem(row_position, 6, QTableWidgetItem(email))
+        # self.tableWidget.setItem(row_position, 7, QTableWidgetItem(married_status))
+        # self.tableWidget.setItem(row_position, 8, QTableWidgetItem(date_of_joining))
+        # self.tableWidget.setItem(row_position, 9, QTableWidgetItem(gender))
+        # self.tableWidget.setItem(row_position, 10, QTableWidgetItem(phone_number))
+        # self.tableWidget.setItem(row_position, 11, QTableWidgetItem(country))
+        # self.tableWidget.setItem(row_position, 12, QTableWidgetItem(salary))
+        
+
     
     def saveData(self):
-        
         #Getting data from formfield
         dataList = {
             "department" : self.comboBox.currentText(),
             "designation" : self.lineEdit.text(),
             "address" : self.lineEdit_2.text(),
             "date_of_birth" : self.dateEdit.date().toString(Qt.ISODate),
-            "identity" : self.comboBox_2.currentText(),
             "name" : self.lineEdit_3.text(),
             "email" : self.lineEdit_4.text(),
             "married_status" : self.comboBox_3.currentText(),
@@ -366,29 +397,13 @@ class Ui_MainWindow(object):
         }
 
         dbConnect.appendData(dataList)
+        self.loadTable()
 
 
 
 
-    #     #Adding data to table
-    #     row_position = self.tableWidget.rowCount() #gettint existing row count so we can add new row at the end of the row
-    #    # print(row_position)
-    #     self.tableWidget.insertRow(row_position)#inserting a new row 
-    #     # inserting respective data entered at the form on the new row
-    #     self.tableWidget.setItem(row_position, 0, QTableWidgetItem(department))
-    #     self.tableWidget.setItem(row_position, 1, QTableWidgetItem(designation))
-    #     self.tableWidget.setItem(row_position, 2, QTableWidgetItem(address))
-    #     self.tableWidget.setItem(row_position, 3, QTableWidgetItem(date_of_birth))
-    #     self.tableWidget.setItem(row_position, 4, QTableWidgetItem(identity))
-    #     self.tableWidget.setItem(row_position, 5, QTableWidgetItem(name))
-    #     self.tableWidget.setItem(row_position, 6, QTableWidgetItem(email))
-    #     self.tableWidget.setItem(row_position, 7, QTableWidgetItem(married_status))
-    #     self.tableWidget.setItem(row_position, 8, QTableWidgetItem(date_of_joining))
-    #     self.tableWidget.setItem(row_position, 9, QTableWidgetItem(gender))
-    #     self.tableWidget.setItem(row_position, 10, QTableWidgetItem(phone_number))
-    #     self.tableWidget.setItem(row_position, 11, QTableWidgetItem(country))
-    #     self.tableWidget.setItem(row_position, 12, QTableWidgetItem(salary))
-        
+
+
         
     def deleteData(self):
         selected_rows = self.tableWidget.selectedItems()

@@ -5,7 +5,7 @@ import mysql.connector
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    database= "employee"
+    database= "employee",
 )
 
 # it will help in query executions
@@ -24,7 +24,6 @@ if "emp_record" not in tables:
             designation text,
             address text,
             date_of_birth text,
-            identity Text,
             name Text,
             email Text,
             married_status Text,
@@ -42,7 +41,6 @@ def appendData(dataList):
             designation,
             address,
             date_of_birth,
-            identity,
             name,
             email,
             married_status,
@@ -51,12 +49,15 @@ def appendData(dataList):
             phone_number,
             country,
             salary )
-            values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '''
+            values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '''
     cursor.execute(query,data)
 
+def loadData():
     cursor.execute("select * from emp_record")
+    d = []
     for i in cursor.fetchall():
-        print(i)
+        d.append(i)
+    return d
 
 
 
